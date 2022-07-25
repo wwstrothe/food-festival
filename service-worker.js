@@ -1,3 +1,6 @@
+const APP_PREFIX = 'FoodFest-';
+const VERSION = 'version_01';
+const CACHE_NAME = APP_PREFIX + VERSION;
 const FILES_TO_CACHE = [
   "./index.html",
   "./events.html",
@@ -11,9 +14,6 @@ const FILES_TO_CACHE = [
   "./dist/tickets.bundle.js",
   "./dist/schedule.bundle.js",
 ];
-const APP_PREFIX = 'FoodFest-';
-const VERSION = 'version_01';
-const CACHE_NAME = APP_PREFIX + VERSION;
 
 self.addEventListener('install', function (e) {
   e.waitUntil(
@@ -48,16 +48,16 @@ self.addEventListener('fetch', function (e) {
   console.log ('fetch request : ' + e.request.url)
   e.respondWith(
     caches.match(e.request).then(function (request) {
-      // if (request) {  // if cache is available, respond with cache
-      //   console.log('respond with cache : ' + e.request.url)
-      //   return request
-      // } else {        // if there are not cache, try fetching request
-      //   console.log('file is not cached, fetching : ' + e.request.url)
-      //   return fetch(e.request)
-      // }
+      if (request) {  // if cache is available, respond with cache
+        console.log('respond with cache : ' + e.request.url)
+        return request
+      } else {        // if there are not cache, try fetching request
+        console.log('file is not cached, fetching : ' + e.request.url)
+        return fetch(e.request)
+      }
 
       // You can omit if/else for console.log & put one line below like this too.
-      return request || fetch(e.request)
+      // return request || fetch(e.request)
     })
   )
 })
