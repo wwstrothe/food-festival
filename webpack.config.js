@@ -1,6 +1,7 @@
-const path = require("path");
 const webpack  = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const path = require("path");
+const { config } = require("process");
 
 module.exports = {
   entry: {
@@ -25,7 +26,7 @@ module.exports = {
               name (file) {
                 return "[path][name].[ext]"
               },
-              publicPath: function(url) {
+              publicPath(url) {
                 return url.replace("../", "/assets/")
               }
             }
@@ -43,7 +44,7 @@ module.exports = {
       jQuery: "jquery"
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: "static", // the report outputs to an HTML file in the dist folder
+      analyzerMode: "disabled", // the report outputs to an HTML file in the dist folder
     })
   ],
   mode: 'development'
